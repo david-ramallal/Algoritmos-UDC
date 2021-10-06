@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P1/main.c
+stdio.h
+-
+sys/time.h
+-
+time.h
+-
+stdlib.h
+-
+math.h
+-
+

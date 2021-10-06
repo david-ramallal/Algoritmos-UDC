@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -Wl,--enable-auto-import CMakeFiles/P2.dir/main.c.o  -o P2.exe -Wl,--out-implib,libP2.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
