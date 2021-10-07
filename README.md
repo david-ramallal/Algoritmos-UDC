@@ -2,6 +2,7 @@
 Prácticas 614G01011-Algoritmos
 
 P1 - Maximum subsequence sum
+9,5
 
 P2 - Selection sort and Shell sort
 
