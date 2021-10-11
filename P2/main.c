@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-
 #define TESTMAX 17
 
 void sel_sort(int v[], int n)
@@ -35,7 +34,7 @@ void shell_sort(int v[], int n)
             tmp = v[i];
             j = i;
             keepgoing = true;
-            while((j - increment > 0) && keepgoing){
+            while((j - increment >= 0) && keepgoing){
                 if(tmp < v[j - increment]){
                     v[j] = v[j - increment];
                     j = j - increment;
@@ -299,125 +298,68 @@ double exeDesShell (int n){
     return t;
 }
 
+void printFunctionSel (double function())
+{
+    int i;
+    printf("%4sn%14st(n)%10st(n)/n^1.8%10st(n)/n^2%12st(n)/n^2.2%s\n"
+            ,"","","","","","");
+    for(i = 500; i <= 32000; i = i*2){
+        if(function(i) < 500){
+            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f%3s(*)\n"
+                    , i,"",function(i),"",
+                   function(i)/pow(i,1.8),"",
+                   function(i)/pow(i,2),"",
+                   function(i)/pow(i,2.2),"");
+        } else {
+            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f\n"
+                    , i,"",function(i),"",
+                   function(i)/pow(i,1.8),"",
+                   function(i)/pow(i,2),"",
+                   function(i)/pow(i,2.2));
+        }
+    }
+}
+
+void printFunctionShell (double function())
+{
+    int i;
+    printf("%4sn%14st(n)%10st(n)/n^1.8%10st(n)/n^2%12st(n)/n^2.2%s\n"
+            ,"","","","","","");
+    for(i = 500; i <= 32000; i = i*2){
+        if(function(i) < 500){
+            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f%3s(*)\n"
+                    , i,"",function(i),"",
+                   function(i)/pow(i,1.8),"",
+                   function(i)/pow(i,2),"",
+                   function(i)/pow(i,2.2),"");
+        } else {
+            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f\n"
+                    , i,"",function(i),"",
+                   function(i)/pow(i,1.8),"",
+                   function(i)/pow(i,2),"",
+                   function(i)/pow(i,2.2));
+        }
+    }
+}
+
 int main() {
     test1();
     printf("\n");
     test2();
 
-    int i;
-    printf("\nSelection sort with random initialization\n"
-           "%4sn%14st(n)%10st(n)/n^1.8%10st(n)/n^2%12st(n)/n^2.2%s\n"
-            ,"","","","","","");
-    for(i = 500; i <= 32000; i = i*2){
-        if(exeRandomSel(i) < 500){
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f%3s(*)\n"
-                    , i,"",exeRandomSel(i),"",
-                   exeRandomSel(i)/pow(i,1.8),"",
-                   exeRandomSel(i)/pow(i,2),"",
-                   exeRandomSel(i)/pow(i,2.2),"");
-        } else {
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f\n"
-                    , i,"",exeRandomSel(i),"",
-                   exeRandomSel(i)/pow(i,1.8),"",
-                   exeRandomSel(i)/pow(i,2),"",
-                   exeRandomSel(i)/pow(i,2.2));
-        }
-    }
+    printf("\nSelection sort with random initialization\n");
+    printFunctionSel(exeRandomSel);
+    printf("\nSelection sort with ascending initialization\n");
+    printFunctionSel(exeAscSel);
+    printf("\nSelection sort with descending initialization\n");
+    printFunctionSel(exeDesSel);
 
-    printf("\nSelection sort with ascending initialization\n"
-           "%4sn%14st(n)%10st(n)/n^1.8%10st(n)/n^2%12st(n)/n^2.2%s\n"
-            ,"","","","","","");
-    for(i = 500; i <= 32000; i = i*2){
-        if(exeAscSel(i) < 500){
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f%3s(*)\n"
-                    , i,"",exeAscSel(i),"",
-                   exeAscSel(i)/pow(i,1.8),"",
-                   exeAscSel(i)/pow(i,2),"",
-                   exeAscSel(i)/pow(i,2.2),"");
-        } else {
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f\n"
-                    , i,"",exeAscSel(i),"",
-                   exeAscSel(i)/pow(i,1.8),"",
-                   exeAscSel(i)/pow(i,2),"",
-                   exeAscSel(i)/pow(i,2.2));
-        }
-    }
-
-    printf("\nSelection sort with descending initialization\n"
-           "%4sn%14st(n)%10st(n)/n^1.8%10st(n)/n^2%12st(n)/n^2.2%s\n"
-            ,"","","","","","");
-    for(i = 500; i <= 32000; i = i*2){
-        if(exeDesSel(i) < 500){
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f%3s(*)\n"
-                    , i,"",exeDesSel(i),"",
-                   exeDesSel(i)/pow(i,1.8),"",
-                   exeDesSel(i)/pow(i,2),"",
-                   exeDesSel(i)/pow(i,2.2),"");
-        } else {
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f\n"
-                    , i,"",exeAscSel(i),"",
-                   exeAscSel(i)/pow(i,1.8),"",
-                   exeAscSel(i)/pow(i,2),"",
-                   exeAscSel(i)/pow(i,2.2));
-        }
-    }
-
-    printf("\nShell sort with random initialization\n"
-           "%4sn%14st(n)%10st(n)/n^1.8%10st(n)/n^2%12st(n)/n^2.2%s\n"
-            ,"","","","","","");
-    for(i = 500; i <= 32000; i = i*2){
-        if(exeRandomShell(i) < 500){
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f%3s(*)\n"
-                    , i,"",exeRandomShell(i),"",
-                   exeRandomShell(i)/pow(i,1.8),"",
-                   exeRandomShell(i)/pow(i,2),"",
-                   exeRandomShell(i)/pow(i,2.2),"");
-        } else {
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f\n"
-                    , i,"",exeRandomShell(i),"",
-                   exeRandomShell(i)/pow(i,1.8),"",
-                   exeRandomShell(i)/pow(i,2),"",
-                   exeRandomShell(i)/pow(i,2.2));
-        }
-    }
-
-    printf("\nShell sort with ascending initialization\n"
-           "%4sn%14st(n)%10st(n)/n^1.8%10st(n)/n^2%12st(n)/n^2.2%s\n"
-            ,"","","","","","");
-    for(i = 500; i <= 32000; i = i*2){
-        if(exeAscShell(i) < 500){
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f%3s(*)\n"
-                    , i,"",exeAscShell(i),"",
-                   exeAscShell(i)/pow(i,1.8),"",
-                   exeAscShell(i)/pow(i,2),"",
-                   exeAscShell(i)/pow(i,2.2),"");
-        } else {
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f\n"
-                    , i,"",exeAscShell(i),"",
-                   exeAscShell(i)/pow(i,1.8),"",
-                   exeAscShell(i)/pow(i,2),"",
-                   exeAscShell(i)/pow(i,2.2));
-        }
-    }
-
-    printf("\nShell sort with descending initialization\n"
-           "%4sn%14st(n)%10st(n)/n^1.8%10st(n)/n^2%12st(n)/n^2.2%s\n"
-            ,"","","","","","");
-    for(i = 500; i <= 32000; i = i*2){
-        if(exeDesShell(i) < 500){
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f%3s(*)\n"
-                    , i,"",exeDesShell(i),"",
-                   exeDesShell(i)/pow(i,1.8),"",
-                   exeDesShell(i)/pow(i,2),"",
-                   exeDesShell(i)/pow(i,2.2),"");
-        } else {
-            printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f\n"
-                    , i,"",exeDesShell(i),"",
-                   exeDesShell(i)/pow(i,1.8),"",
-                   exeDesShell(i)/pow(i,2),"",
-                   exeDesShell(i)/pow(i,2.2));
-        }
-    }
+    printf("\nShell sort with random initialization\n");
+    printFunctionShell(exeRandomShell);
+    printf("\nShell sort with ascending initialization\n");
+    printFunctionShell(exeAscShell);
+    printf("\nShell sort with descending initialization\n");
+    printFunctionShell(exeDesShell);
 
     printf("\n(*) means that measurement corresponds to "
            "an average time over K(1000 in this case) "
