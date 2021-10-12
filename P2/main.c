@@ -30,7 +30,7 @@ void shell_sort(int v[], int n)
     bool keepgoing;
     do {
         increment = increment / 2;
-        for(i = increment + 1; i < n; i++){
+        for(i = increment; i < n; i++){
             tmp = v[i];
             j = i;
             keepgoing = true;
@@ -323,21 +323,21 @@ void printFunctionSel (double function())
 void printFunctionShell (double function())
 {
     int i;
-    printf("%4sn%14st(n)%10st(n)/n^1.8%10st(n)/n^2%12st(n)/n^2.2%s\n"
+    printf("%4sn%14st(n)%10st(n)/n%10st(n)/n*(log n)%12st(n)/n^1.5%s\n"
             ,"","","","","","");
     for(i = 500; i <= 32000; i = i*2){
         if(function(i) < 500){
             printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f%3s(*)\n"
                     , i,"",function(i),"",
-                   function(i)/pow(i,1.8),"",
-                   function(i)/pow(i,2),"",
-                   function(i)/pow(i,2.2),"");
+                   function(i)/(i),"",
+                   function(i)/(i*log(i)),"",
+                   function(i)/(i*pow(i,1.5)),"");
         } else {
             printf("%5d%7s%11.3f%12s%.6f%10s%.6f%14s%.6f\n"
                     , i,"",function(i),"",
-                   function(i)/pow(i,1.8),"",
-                   function(i)/pow(i,2),"",
-                   function(i)/pow(i,2.2));
+                   function(i)/(i),"",
+                   function(i)/(i*log(i)),"",
+                   function(i)/(i*pow(i,1.5)));
         }
     }
 }
