@@ -323,7 +323,7 @@ void printFunctionSel (double function())
 void printFunctionShell (double function())
 {
     int i;
-    printf("%4sn%14st(n)%10st(n)/n%10st(n)/n*(log n)%12st(n)/n^1.5%s\n"
+    printf("%4sn%14st(n)%14st(n)/n%4st(n)/n*(log n)%12st(n)/n^1.5%s\n"
             ,"","","","","","");
     for(i = 500; i <= 32000; i = i*2){
         if(function(i) < 500){
