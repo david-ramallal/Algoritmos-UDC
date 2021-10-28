@@ -6,6 +6,10 @@
 #include <math.h>
 
 #define TESTMAX 17
+#define THRESHOLD1 1
+#define THRESHOLD2 10
+#define THRESHOLD3 100
+
 
 void ins_sort (int v[], int n)
 {
@@ -19,6 +23,60 @@ void ins_sort (int v[], int n)
         }
         v[j+1] = x;
     }
+}
+
+void swap(int * v, int i, int j)
+{
+    int t = v[i];
+    v[i] = v[j];
+    v[j] = t;
+
+}
+
+void median3 (int v[], int i, int j)
+{
+    int k;
+    k = (i + j) / 2;                     /* precondition: i < j */
+    if (v[k] > v[j]){
+        swap(v, k, j);
+    }
+    if(v[k] > v[i]){
+        swap(v, k, i);
+    }
+    if(v[i] > v[j]){
+        swap(v, i, j);
+    }
+}
+
+void sort_aux(int v[], int left, int right)
+{
+    int pivot, i, j;
+    if(left + THRESHOLD1 <= right){
+        median3(v, left, right);
+    pivot = v[left];
+    i = left;
+    j = right;
+    do{
+        do{
+            i = i + 1;
+        }while(v[i] >= pivot);
+        do{
+            j = j - 1;
+        }while(v[j] <= pivot);
+        swap(v, i, j);
+    }while(j <= i);
+        swap(v, i, j);
+        swap(v, left, j);
+        sort_aux(v, left, j-1);
+        sort_aux(v, j+1, right);
+    }
+
+}
+
+void quick_sort(int v [], int n) {
+    sort_aux(v, 0, n-1);
+    if (THRESHOLD1 > 1)
+        ins_sort(v, n);
 }
 
 double microseconds() {
@@ -76,11 +134,10 @@ void print_array(int v[], int n){
         printf("sorted? 0\n");
 }
 
-double exeRandomIns (int n){
+double exeInsertion (int n, void function()){
     double t, ta, tb, t1, t2;
     int v[n], i;
-    init_seed();
-    random_init(v, n);
+    function(v,n);
     ta = microseconds();
     ins_sort(v,n);
     tb = microseconds();
@@ -88,68 +145,14 @@ double exeRandomIns (int n){
     if (t < 500) {
         ta = microseconds();
         for (i = 0; i < 1000; i++){
-            random_init(v, n);
+            function(v,n);
             ins_sort(v,n);
         }
         tb = microseconds();
         t1 = tb - ta;
         ta = microseconds();
         for (i = 0; i < 1000; i++){
-            random_init(v, n);
-        }
-        tb = microseconds();
-        t2 = tb - ta;
-        t = (t1 - t2) / 1000;
-    }
-    return t;
-}
-
-double exeAscIns (int n){
-    double t, ta, tb, t1, t2;
-    int v[n], i;
-    ascending_init(v,n);
-    ta = microseconds();
-    ins_sort(v,n);
-    tb = microseconds();
-    t = tb - ta;
-    if (t < 500) {
-        ta = microseconds();
-        for (i = 0; i < 1000; i++){
-            ascending_init(v,n);
-            ins_sort(v,n);
-        }
-        tb = microseconds();
-        t1 = tb - ta;
-        ta = microseconds();
-        for (i = 0; i < 1000; i++){
-            ascending_init(v,n);
-        }
-        tb = microseconds();
-        t2 = tb - ta;
-        t = (t1 - t2) / 1000;
-    }
-    return t;
-}
-
-double exeDesIns (int n){
-    double t, ta, tb, t1, t2;
-    int v[n], i;
-    descending_init(v,n);
-    ta = microseconds();
-    ins_sort(v,n);
-    tb = microseconds();
-    t = tb - ta;
-    if (t < 500) {
-        ta = microseconds();
-        for (i = 0; i < 1000; i++){
-            descending_init(v,n);
-            ins_sort(v,n);
-        }
-        tb = microseconds();
-        t1 = tb - ta;
-        ta = microseconds();
-        for (i = 0; i < 1000; i++){
-            descending_init(v,n);
+            function(v,n);
         }
         tb = microseconds();
         t2 = tb - ta;
@@ -187,46 +190,75 @@ void testInsert()
     printf("\n");
 }
 
-void printFunctionIns (double function())
+void testQuick()
+{
+    int v[TESTMAX];
+    init_seed();
+    random_init(v, TESTMAX);
+    printf("Quicksort with random initialization\n");
+    print_array(v, TESTMAX);
+    printf("sorting...\n");
+    quick_sort(v,TESTMAX);
+    print_array(v, TESTMAX);
+    printf("\n");
+
+    descending_init(v, TESTMAX);
+    printf("Quicksort with descending initialization\n");
+    print_array(v, TESTMAX);
+    printf("sorting...\n");
+    quick_sort(v,TESTMAX);
+    print_array(v, TESTMAX);
+    printf("\n");
+
+    ascending_init(v, TESTMAX);
+    printf("Quicksort with ascending initialization\n");
+    print_array(v, TESTMAX);
+    printf("sorting...\n");
+    quick_sort(v,TESTMAX);
+    print_array(v, TESTMAX);
+    printf("\n");
+}
+
+void printFunctionIns (void function())
 {
     int i;
     printf("%4sn%14st(n)%12st(n)/n^1.8%12st(n)/n^2%14st(n)/n^2.2%s\n"
             ,"","","","","","");
     for(i = 500; i <= 32000; i = i*2){
-        if(function(i) < 500){
+        if(exeInsertion(i, function) < 500){
             printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f%3s(*)\n"
-                    , i,"",function(i),"",
-                   function(i)/pow(i,1.8),"",
-                   function(i)/pow(i,2),"",
-                   function(i)/pow(i,2.2),"");
+                    , i,"",exeInsertion(i, function),"",
+                   exeInsertion(i, function)/pow(i,1.8),"",
+                   exeInsertion(i, function)/pow(i,2),"",
+                   exeInsertion(i, function)/pow(i,2.2),"");
         } else {
             printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f\n"
-                    , i,"",function(i),"",
-                   function(i)/pow(i,1.8),"",
-                   function(i)/pow(i,2),"",
-                   function(i)/pow(i,2.2));
+                    , i,"",exeInsertion(i, function),"",
+                   exeInsertion(i, function)/pow(i,1.8),"",
+                   exeInsertion(i, function)/pow(i,2),"",
+                   exeInsertion(i, function)/pow(i,2.2));
         }
     }
 }
 
-void printFunctionInsBestCase (double function())
+void printFunctionInsBestCase (void function())
 {
     int i;
     printf("%4sn%14st(n)%12st(n)/n^0.8%14st(n)/n%14st(n)/n^1.2%s\n"
             ,"","","","","","");
     for(i = 500; i <= 32000; i = i*2){
-        if(function(i) < 500){
+        if(exeInsertion(i, function) < 500){
             printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f%3s(*)\n"
-                    , i,"",function(i),"",
-                   function(i)/pow(i,0.8),"",
-                   function(i)/i,"",
-                   function(i)/pow(i,1.2),"");
+                    , i,"",exeInsertion(i, function),"",
+                   exeInsertion(i, function)/pow(i,0.8),"",
+                   exeInsertion(i, function)/i,"",
+                   exeInsertion(i, function)/pow(i,1.2),"");
         } else {
             printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f%3s\n"
-                    , i,"",function(i),"",
-                   function(i)/pow(i,0.8),"",
-                   function(i)/i,"",
-                   function(i)/pow(i,1.2),"");
+                    , i,"",exeInsertion(i, function),"",
+                   exeInsertion(i, function)/pow(i,0.8),"",
+                   exeInsertion(i, function)/i,"",
+                   exeInsertion(i, function)/pow(i,1.2),"");
         }
     }
 }
@@ -234,13 +266,15 @@ void printFunctionInsBestCase (double function())
 int main() {
     testInsert();
     printf("\n");
+    testQuick();
+    printf("\n");
 
     printf("\nInsertion sort with random initialization\n");
-    printFunctionIns(exeRandomIns);
+    printFunctionIns(random_init);
     printf("\nInsertion sort with ascending initialization\n");
-    printFunctionInsBestCase(exeAscIns);
+    printFunctionInsBestCase(ascending_init);
     printf("\nInsertion sort with descending initialization\n");
-    printFunctionIns(exeDesIns);
+    printFunctionIns(descending_init);
 
 
     printf("\n(*) means that measurement corresponds to "
