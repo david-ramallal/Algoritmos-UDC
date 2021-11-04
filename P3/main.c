@@ -6,9 +6,7 @@
 #include <math.h>
 
 #define TESTMAX 17
-#define THRESHOLD1 1
-#define THRESHOLD2 10
-#define THRESHOLD3 100
+#define THRESHOLD 1
 
 
 void ins_sort (int v[], int n)
@@ -25,18 +23,11 @@ void ins_sort (int v[], int n)
     }
 }
 
-//void swap(int * v, int i, int j)
-//{
-//    int t = v[i];
-//    v[i] = v[j];
-//    v[j] = t;
-//}
-
-void swap(int *i, int *j)
+void swap(int v[], int i, int j)
 {
-    int t = *i;
-    *i = *j;
-    *j = t;
+    int t = v[i];
+    v[i] = v[j];
+    v[j] = t;
 }
 
 void median3 (int v[], int i, int j)
@@ -44,44 +35,43 @@ void median3 (int v[], int i, int j)
     int k;
     k = (i + j) / 2;                     /* precondition: i < j */
     if (v[k] > v[j]){
-        swap(&v[k], &v[j]);
+        swap( v, i, j);
     }
     if(v[k] > v[i]){
-        swap(&v[k], &v[i]);
+        swap( v, k, i);
     }
     if(v[i] > v[j]){
-        swap(&v[i], &v[j]);
+        swap( v, i, j);
     }
 }
 
 void sort_aux(int v[], int left, int right)
 {
     int pivot, i, j;
-    if(left + THRESHOLD1 <= right){
-        median3(v, left, right);
-    pivot = v[left];
-    i = left;
-    j = right;
-    do{
+    if(left + THRESHOLD <= right){
+        median3( v, left, right);
+        pivot = v[left];
+        i = left;
+        j = right;
         do{
-            i = i + 1;
-        }while(v[i] >= pivot);
-        do{
-            j = j - 1;
-        }while(v[j] <= pivot);
-        swap(&v[i], &v[j]);
-    }while(j <= i);
-        swap(&v[i], &v[j]);
-        swap(&v[left], &v[j]);
+            do{
+                i = i + 1;
+            }while(v[i] < pivot);
+            do{
+                j = j - 1;
+            }while(v[j] > pivot);
+            swap( v, i, j);
+        }while(j > i);
+        swap( v, i, j);
+        swap( v, left, j);
         sort_aux(v, left, j-1);
         sort_aux(v, j+1, right);
     }
-
 }
 
 void quick_sort(int v [], int n) {
     sort_aux(v, 0, n-1);
-    if (THRESHOLD1 > 1)
+    if (THRESHOLD > 1)
         ins_sort(v, n);
 }
 
@@ -120,7 +110,6 @@ void descending_init(int v [], int n) {
 
 bool isSorted (const int v[], int n) {
     int i;
-
     for(i = 1; i < n; i++) {
         if(v[i-1] > v[i])
             return false;
@@ -140,25 +129,25 @@ void print_array(int v[], int n){
         printf("sorted? 0\n");
 }
 
-double exeInsertion (int n, void function()){
+double exeFunction (int n, void functionInit(), void functionSort()){
     double t, ta, tb, t1, t2;
     int v[n], i;
-    function(v,n);
+    functionInit(v,n);
     ta = microseconds();
-    ins_sort(v,n);
+    functionSort(v,n);
     tb = microseconds();
     t = tb - ta;
     if (t < 500) {
         ta = microseconds();
         for (i = 0; i < 1000; i++){
-            function(v,n);
-            ins_sort(v,n);
+            functionInit(v,n);
+            functionSort(v,n);
         }
         tb = microseconds();
         t1 = tb - ta;
         ta = microseconds();
         for (i = 0; i < 1000; i++){
-            function(v,n);
+            functionInit(v,n);
         }
         tb = microseconds();
         t2 = tb - ta;
@@ -231,18 +220,18 @@ void printFunctionIns (void function())
     printf("%4sn%14st(n)%12st(n)/n^1.8%12st(n)/n^2%14st(n)/n^2.2%s\n"
             ,"","","","","","");
     for(i = 500; i <= 32000; i = i*2){
-        if(exeInsertion(i, function) < 500){
+        if(exeFunction(i, function, ins_sort) < 500){
             printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f%3s(*)\n"
-                    , i,"",exeInsertion(i, function),"",
-                   exeInsertion(i, function)/pow(i,1.8),"",
-                   exeInsertion(i, function)/pow(i,2),"",
-                   exeInsertion(i, function)/pow(i,2.2),"");
+                    , i,"",exeFunction(i, function, ins_sort),"",
+                   exeFunction(i, function, ins_sort)/pow(i,1.8),"",
+                   exeFunction(i, function, ins_sort)/pow(i,2),"",
+                   exeFunction(i, function, ins_sort)/pow(i,2.2),"");
         } else {
             printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f\n"
-                    , i,"",exeInsertion(i, function),"",
-                   exeInsertion(i, function)/pow(i,1.8),"",
-                   exeInsertion(i, function)/pow(i,2),"",
-                   exeInsertion(i, function)/pow(i,2.2));
+                    , i,"",exeFunction(i, function, ins_sort),"",
+                   exeFunction(i, function, ins_sort)/pow(i,1.8),"",
+                   exeFunction(i, function, ins_sort)/pow(i,2),"",
+                   exeFunction(i, function, ins_sort)/pow(i,2.2));
         }
     }
 }
@@ -253,27 +242,47 @@ void printFunctionInsBestCase (void function())
     printf("%4sn%14st(n)%12st(n)/n^0.8%14st(n)/n%14st(n)/n^1.2%s\n"
             ,"","","","","","");
     for(i = 500; i <= 32000; i = i*2){
-        if(exeInsertion(i, function) < 500){
+        if(exeFunction(i, function, ins_sort) < 500){
             printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f%3s(*)\n"
-                    , i,"",exeInsertion(i, function),"",
-                   exeInsertion(i, function)/pow(i,0.8),"",
-                   exeInsertion(i, function)/i,"",
-                   exeInsertion(i, function)/pow(i,1.2),"");
+                    , i,"",exeFunction(i, function, ins_sort),"",
+                   exeFunction(i, function, ins_sort)/pow(i,0.8),"",
+                   exeFunction(i, function, ins_sort)/i,"",
+                   exeFunction(i, function, ins_sort)/pow(i,1.2),"");
         } else {
             printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f%3s\n"
-                    , i,"",exeInsertion(i, function),"",
-                   exeInsertion(i, function)/pow(i,0.8),"",
-                   exeInsertion(i, function)/i,"",
-                   exeInsertion(i, function)/pow(i,1.2),"");
+                    , i,"",exeFunction(i, function, ins_sort),"",
+                   exeFunction(i, function, ins_sort)/pow(i,0.8),"",
+                   exeFunction(i, function, ins_sort)/i,"",
+                   exeFunction(i, function, ins_sort)/pow(i,1.2),"");
+        }
+    }
+}
+
+void printFunctionQuick (void function())
+{
+    int i;
+    printf("%4sn%14st(n)%16st(n)/n%6st(n)/n*(log n)%13st(n)/n^1.5%s\n"
+            ,"","","","","","");
+    for(i = 500; i <= 32000; i = i*2){
+        if(exeFunction(i, function, quick_sort) < 500){
+            printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f%3s(*)\n"
+                    , i,"",exeFunction(i, function, quick_sort),"",
+                   exeFunction(i, function, quick_sort)/(i),"",
+                   exeFunction(i, function, quick_sort)/(i*log(i)),"",
+                   exeFunction(i, function, quick_sort)/pow(i,1.5),"");
+        } else {
+            printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f\n"
+                    , i,"",exeFunction(i, function, quick_sort),"",
+                   exeFunction(i, function, quick_sort)/(i),"",
+                   exeFunction(i, function, quick_sort)/(i*log(i)),"",
+                   exeFunction(i, function, quick_sort)/pow(i,1.5));
         }
     }
 }
 
 int main() {
     testInsert();
-    printf("\n");
     testQuick();
-    printf("\n");
 
     printf("\nInsertion sort with random initialization\n");
     printFunctionIns(random_init);
@@ -281,6 +290,13 @@ int main() {
     printFunctionInsBestCase(ascending_init);
     printf("\nInsertion sort with descending initialization\n");
     printFunctionIns(descending_init);
+
+    printf("\nQuicksort with random initialization\n");
+    printFunctionQuick(random_init);
+    printf("\nQuicksort with ascending initialization\n");
+    printFunctionQuick(ascending_init);
+    printf("\nQuicksort with descending initialization\n");
+    printFunctionQuick(descending_init);
 
 
     printf("\n(*) means that measurement corresponds to "
