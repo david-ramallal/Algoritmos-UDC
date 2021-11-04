@@ -25,12 +25,18 @@ void ins_sort (int v[], int n)
     }
 }
 
-void swap(int * v, int i, int j)
-{
-    int t = v[i];
-    v[i] = v[j];
-    v[j] = t;
+//void swap(int * v, int i, int j)
+//{
+//    int t = v[i];
+//    v[i] = v[j];
+//    v[j] = t;
+//}
 
+void swap(int *i, int *j)
+{
+    int t = *i;
+    *i = *j;
+    *j = t;
 }
 
 void median3 (int v[], int i, int j)
@@ -38,13 +44,13 @@ void median3 (int v[], int i, int j)
     int k;
     k = (i + j) / 2;                     /* precondition: i < j */
     if (v[k] > v[j]){
-        swap(v, k, j);
+        swap(&v[k], &v[j]);
     }
     if(v[k] > v[i]){
-        swap(v, k, i);
+        swap(&v[k], &v[i]);
     }
     if(v[i] > v[j]){
-        swap(v, i, j);
+        swap(&v[i], &v[j]);
     }
 }
 
@@ -63,10 +69,10 @@ void sort_aux(int v[], int left, int right)
         do{
             j = j - 1;
         }while(v[j] <= pivot);
-        swap(v, i, j);
+        swap(&v[i], &v[j]);
     }while(j <= i);
-        swap(v, i, j);
-        swap(v, left, j);
+        swap(&v[i], &v[j]);
+        swap(&v[left], &v[j]);
         sort_aux(v, left, j-1);
         sort_aux(v, j+1, right);
     }
