@@ -1,0 +1,213 @@
+Algorithms - Practical 3
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Authors:
+
+David García Ramallal (david.ramallal@udc.es)
+Alfredo Javier Freire Bouzas (javier.freire.bouzas@udc.es)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Introduction:
+
+In this practical we are working with two kinds of sorting algorithms :
+	-Insertion Sort
+	-Quicksort
+Our goal is to make them work with three different initializations : 
+	-A random one
+	-An ascending one
+	-A descending one
+In the case of the Quicksort, we are going to use three different threshold
+	-Threshold = 1
+	-Threshold = 10
+	-Threshold = 100
+In addition, we have to study empirically the complexity of the algorithms,
+at the same time that we search for the tight, the underestimated and the 
+overestimated bounds and the constant (in the case of the tight bound).
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Information of the machine where the program was compiled and executed:
+
+Computer	: Acer Nitro AN515-55 V2.06
+Model name	: Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+Kernel		: Linux 5.11.0-34-generic
+Operating Sys	: Ubuntu 20.04.3 LTS
+VGA compatible controller: Intel Corporation UHD Graphics (rev 05)
+VGA compatible controller: NVIDIA Corporation Device 1f99 (rev a1)
+MemTotal	: 16220036 kB
+SwapTotal	: 2097148 kB
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Time unit: microseconds
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Insertion sort with random initialization
+    n              t(n)            t(n)/n^1.8            t(n)/n^2              t(n)/n^2.2
+  500           156.627            0.00220105          0.00063062              0.00018141   (*)
+ 1000           589.000            0.00240059          0.00060900              0.00014971
+ 2000          2448.000            0.00308338          0.00064525              0.00013000
+ 4000          9745.000            0.00321323          0.00064037              0.00012760
+ 8000         38552.000            0.00364379          0.00060591              0.00010114
+16000        155071.000            0.00423528          0.00061609              0.00008878
+32000        571639.000            0.00450378          0.00058302              0.00007470
+
+Insertion sort with ascending initialization
+    n              t(n)            t(n)/n^0.8              t(n)/n              t(n)/n^1.2
+  500             1.360            0.00681361          0.00308600              0.00095622   (*)
+ 1000             3.152            0.01520769          0.00354000              0.00067871   (*)
+ 2000             5.510            0.01341504          0.00282650              0.00078503   (*)
+ 4000            12.234            0.01554510          0.00308350              0.00059760   (*)
+ 8000            23.423            0.01757605          0.00311575              0.00050523   (*)
+16000            47.041            0.02104821          0.00301875              0.00043743   (*)
+32000            98.118            0.02456918          0.00298250              0.00037285   (*)
+
+Insertion sort with descending initialization
+    n              t(n)            t(n)/n^1.8            t(n)/n^2              t(n)/n^2.2
+  500           278.995            0.00385450          0.00111168              0.00032554   (*)
+ 1000          1086.000            0.00437918          0.00104400              0.00027907
+ 2000          4585.000            0.00568430          0.00119175              0.00027908
+ 4000         17406.000            0.00621568          0.00117069              0.00021679
+ 8000         73571.000            0.00670058          0.00112369              0.00018223
+16000        282224.000            0.00778588          0.00110477              0.00016009
+32000       1141522.000            0.00881645          0.00110998              0.00014094
+
+-THRESHOLD = 1
+
+Quicksort with random initialization
+    n              t(n)                t(n)/n      t(n)/n*(log n)             t(n)/n^1.5
+  500            36.845            0.07113800          0.01163227              0.00328782   (*)
+ 1000            77.461            0.07761200          0.01129788              0.00242126   (*)
+ 2000           169.330            0.08419900          0.01108033              0.00187868   (*)
+ 4000           365.910            0.09007425          0.01112415              0.00144997   (*)
+ 8000           741.000            0.09662500          0.01015333              0.00101182
+16000          1748.000            0.13281250          0.01265451              0.00079057
+32000          3583.000            0.13131250          0.01136611              0.00064689
+
+Quicksort with ascending initialization
+    n              t(n)                t(n)/n      t(n)/n*(log n)             t(n)/n^1.5
+  500            11.384            0.02324000          0.00380169              0.00105247   (*)
+ 1000            25.204            0.02513700          0.00387405              0.00080483   (*)
+ 2000            51.718            0.02574250          0.00342051              0.00059199   (*)
+ 4000           112.105            0.02808475          0.00333887              0.00043755   (*)
+ 8000           237.040            0.02974425          0.00326779              0.00033048   (*)
+16000           490.368            0.03158419          0.00422893              0.00024904
+32000          1030.000            0.03221875          0.00298839              0.00017976
+
+Quicksort with descending initialization
+    n              t(n)                t(n)/n      t(n)/n*(log n)             t(n)/n^1.5
+  500            11.841            0.02387600          0.00425192              0.00113574   (*)
+ 1000            25.760            0.02601400          0.00365661              0.00081078   (*)
+ 2000            54.340            0.02665600          0.00351386              0.00061027   (*)
+ 4000           115.358            0.02841375          0.00345877              0.00044843   (*)
+ 8000           241.422            0.03004150          0.00333860              0.00033514   (*)
+16000           567.000            0.03468750          0.00357684              0.00025380
+32000          1081.000            0.03712500          0.00383188              0.00021522
+
+-THRESHOLD = 10
+
+Quicksort with random initialization
+    n              t(n)                t(n)/n      t(n)/n*(log n)             t(n)/n^1.5
+  500            29.945            0.05885400          0.00968042              0.00274571   (*)
+ 1000            64.996            0.06402400          0.00962903              0.00208321   (*)
+ 2000           142.592            0.07328400          0.00951703              0.00162742   (*)
+ 4000           323.338            0.07841225          0.00983440              0.00125423   (*)
+ 8000           800.000            0.08437500          0.00897110              0.00090421
+16000          1628.000            0.08537500          0.00939404              0.00069274
+32000          3832.000            0.11221875          0.01180895              0.00053963
+
+Quicksort with ascending initialization
+    n              t(n)                t(n)/n      t(n)/n*(log n)             t(n)/n^1.5
+  500             7.726            0.01502400          0.00258584              0.00082314   (*)
+ 1000            16.951            0.01690300          0.00254048              0.00053152   (*)
+ 2000            37.404            0.01837500          0.00244550              0.00041289   (*)
+ 4000            83.728            0.02052775          0.00248693              0.00032392   (*)
+ 8000           175.286            0.02200513          0.00247328              0.00024702   (*)
+16000           380.297            0.02426369          0.00245587              0.00018964   (*)
+32000           800.000            0.02500000          0.00240698              0.00014220
+
+Quicksort with descending initialization
+    n              t(n)                t(n)/n      t(n)/n*(log n)             t(n)/n^1.5
+  500             8.910            0.01706000          0.00291281              0.00075570   (*)
+ 1000            18.165            0.01911900          0.00261937              0.00064960   (*)
+ 2000            42.360            0.02068450          0.00268054              0.00047171   (*)
+ 4000            88.712            0.02228575          0.00262679              0.00033968   (*)
+ 8000           184.215            0.02296825          0.00256270              0.00025760   (*)
+16000           426.073            0.02600756          0.00258585              0.00019737   (*)
+32000           874.000            0.03168750          0.00278956              0.00016159
+
+-THRESHOLD = 100
+
+Quicksort with random initialization
+    n              t(n)                t(n)/n      t(n)/n*(log n)             t(n)/n^1.5
+  500            34.164            0.06648600          0.01100311              0.00303014   (*)
+ 1000            74.677            0.07468400          0.01091281              0.00233082   (*)
+ 2000           163.279            0.08132450          0.01066663              0.00180125   (*)
+ 4000           351.088            0.08810025          0.01049502              0.00139767   (*)
+ 8000           719.000            0.08950000          0.00993079              0.00098806
+16000          1963.000            0.09693750          0.01025273              0.00075401
+32000          4158.000            0.11306250          0.00983577              0.00058802
+
+Quicksort with ascending initialization
+    n              t(n)                t(n)/n      t(n)/n*(log n)             t(n)/n^1.5
+  500             4.842            0.00855600          0.00136034              0.00035231   (*)
+ 1000            10.005            0.00977200          0.00154609              0.00032454   (*)
+ 2000            24.169            0.01122850          0.00150719              0.00026526   (*)
+ 4000            52.727            0.01371850          0.00158740              0.00021466   (*)
+ 8000           119.906            0.01501037          0.00167207              0.00016643   (*)
+16000           271.613            0.01734319          0.00172551              0.00013165   (*)
+32000           591.000            0.01725000          0.00166289              0.00009643
+
+Quicksort with descending initialization
+    n              t(n)                t(n)/n      t(n)/n*(log n)             t(n)/n^1.5
+  500             5.299            0.00961000          0.00175329              0.00044748   (*)
+ 1000            10.831            0.01115700          0.00160559              0.00036625   (*)
+ 2000            24.911            0.01289900          0.00163875              0.00029651   (*)
+ 4000            58.964            0.01427625          0.00173335              0.00022809   (*)
+ 8000           128.217            0.01602550          0.00176533              0.00017502   (*)
+16000           285.947            0.01764937          0.00183803              0.00014055   (*)
+32000           622.000            0.01825000          0.00175929              0.00012910
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Bounds and constants information
+
+-Insertion Sort: 
+	Best case: ascending initialization
+		t(n)/n^0.8 is an understimated bound, which tends to infinity.
+		t(n)/n is a tight bound, with constant values:
+			ascending initialization's constant = 0.00309328571
+		t(n)/n^1.2 is an overstimated bound, which tends to zero.
+
+	Other cases:
+		t(n)/n^1.8 is an understimated bound, which tends to infinity.
+		t(n)/n^2 is a tight bound, with constant values:
+			random initialization's constant = 0.00061860857
+			descending initialization's constant = 0.00112236571
+		t(n)/n^2.2 is an overstimated bound, which tends to zero.
+
+-Quicksort:
+	t(n)/n is an understimated bound, which tends to infinity.
+	t(n)/n*(log n) is a tight bound, with constant values:
+		-THRESHOLD = 1
+			random initialization's constant = 0.01132979714
+			ascending initialization's constant = 0.00356003285
+			descending initialization's constant = 0.00366121142
+		-THRESHOLD = 10
+			random initialization's constant = 0.00983356714
+			ascending initialization's constant = 0.00248498285
+			descending initialization's constant = 0.00268251714
+		-THRESHOLD = 100
+			random initialization's constant = 0.01044240857
+			ascending initialization's constant = 0.00158021285
+			descending initialization's constant = 0.00172766142
+	t(n)/n^1.5 is an overstimated bound, which tends to zero.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Conclusion: 
+
+After the realization of this practical we can explain the main differences that we have seen between Insertion Sort and Quicksort. 
+In the case of the Insertion Sort, we have observed that its complexity is not always the same. When the array is initially sorted,  
+the complexity of the algorithm is n, while in other cases is n*log(n). 
+In the other hand we have the Quicksort, which complexity is around n*log(n), although depending on the Threshold it can be more  
+or less constant. It's with Threshold = 1 when we appreciate the most inconsistent results. The reason of that is in the  
+implementation itself, because when Threshold is greater than one, which does not happend in this case, an insertion sort  
+is realized at the end of the Quicksort.
+
