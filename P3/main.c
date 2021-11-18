@@ -8,7 +8,6 @@
 #define TESTMAX 17
 #define THRESHOLD 1
 
-
 void ins_sort (int v[], int n)
 {
     int i, x, j;
