@@ -7,4 +7,4 @@
 
 **P3** - *Insertion sort and Quicksort* - /// <br />
 
-**P4** - /// - /// <br />
+**P4** - *Prim’s Algorithm* - /// <br />
