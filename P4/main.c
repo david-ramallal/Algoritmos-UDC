@@ -4,26 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <math.h>
-
-#define MAX_SIZE 1600
-
-typedef int ** matrix;
-typedef struct {
-    int x, y, weight;
-} edge;
-
-typedef edge element_type;
-typedef struct {
-    int front_index, rear_index, size;
-    element_type vector[MAX_SIZE];
-} queue;
-
-void create_queue(queue *);
-int empty_queue(queue);
-void enqueue(element_type, queue *);
-element_type dequeue(queue *);
-element_type front(queue);
-void show_queue(queue);
+#include "Queue.h"
 
 void prim(matrix m, int nodes, queue *edges) {
 /* calculate the minimum spanning tree returning
@@ -38,9 +19,31 @@ the edges of the tree in the ’edges’ queue */
         closest[i] = 0;
         minDistance[i] = m[i][0];
     }
-/*
-...
-*/
+    i=0;
+    while(i < nodes -1 )
+    {
+        min = 99;
+        for(j = 1; j < nodes; j++)
+        {
+            if(0 <= minDistance[j] && minDistance[j] < min)
+            {
+                min = minDistance[j];
+                k = j;
+            }
+        }
+        //hay que meter la T del conjunto
+        minDistance[k] = -1;
+        for(j=1; j < nodes; j++)
+        {
+            if(*m[j,k] < minDistance[j])
+            {
+                minDistance[j] = *m[j,k];
+                closest[j] = k;
+            }
+        }
+        i++;
+    }
+    // return T
     free(closest);
     free(minDistance);
 }
@@ -55,6 +58,7 @@ matrix create_matrix(int n) {
             return NULL;
     return aux;
 }
+
 void init_matrix(matrix m, int n) {
 /* Creates an undirected complete graph with random values between 1 y n */
     int i, j;
@@ -68,6 +72,7 @@ void init_matrix(matrix m, int n) {
             else
                 m[i][j] = m[j][i];
 }
+
 void free_matrix(matrix m, int n) {
     int i;
     for (i=0; i<n; i++)
@@ -75,7 +80,19 @@ void free_matrix(matrix m, int n) {
     free(m);
 }
 
+double microseconds() {
+    /* obtains the system time in microseconds */
+    struct timeval t;
+    if (gettimeofday(&t, NULL) < 0)
+        return 0.0;
+    return (t.tv_usec + t.tv_sec * 1000000.0);
+}
 
-int main() {
+void init_seed() {
+    /* set the seed of a new sequence of pseudo-random integers */
+    srand(time(NULL));
+}
+
+    int main() {
     return 0;
 }

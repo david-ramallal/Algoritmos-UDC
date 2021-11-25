@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/Queue.c" "/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/cmake-build-debug/CMakeFiles/P4.dir/Queue.c.o"
   "/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/main.c" "/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/cmake-build-debug/CMakeFiles/P4.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")

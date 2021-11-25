@@ -74,6 +74,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/Queue.c">
+			<Option target="P4"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/Queue.h">
+			<Option target="P4"/>
+		</Unit>
 		<Unit filename="/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/main.c">
 			<Option target="P4"/>
 		</Unit>

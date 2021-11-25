@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/P4.dir/Queue.c.o"
   "CMakeFiles/P4.dir/main.c.o"
   "P4.exe"
   "P4.pdb"

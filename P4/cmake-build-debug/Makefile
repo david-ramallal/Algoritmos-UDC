@@ -143,6 +143,33 @@ P4/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P4.dir/build.make CMakeFiles/P4.dir/build
 .PHONY : P4/fast
 
+Queue.o: Queue.c.o
+
+.PHONY : Queue.o
+
+# target to build an object file
+Queue.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P4.dir/build.make CMakeFiles/P4.dir/Queue.c.o
+.PHONY : Queue.c.o
+
+Queue.i: Queue.c.i
+
+.PHONY : Queue.i
+
+# target to preprocess a source file
+Queue.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P4.dir/build.make CMakeFiles/P4.dir/Queue.c.i
+.PHONY : Queue.c.i
+
+Queue.s: Queue.c.s
+
+.PHONY : Queue.s
+
+# target to generate assembly for a file
+Queue.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P4.dir/build.make CMakeFiles/P4.dir/Queue.c.s
+.PHONY : Queue.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -179,6 +206,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... P4"
+	@echo "... Queue.o"
+	@echo "... Queue.i"
+	@echo "... Queue.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
