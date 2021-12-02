@@ -45,7 +45,6 @@ the edges of the tree in the ’edges’ queue */
         }
         i++;
     }
-    //show_queue(*edges);
     free(closest);
     free(minDistance);
 }
@@ -140,6 +139,7 @@ void test1(){
 
     queue edges;
     prim(m,5, &edges);
+    show_queue(edges);
     free_matrix(m,5);
 }
 
@@ -154,6 +154,7 @@ void test2(){
 
     queue edges;
     prim(m,4, &edges);
+    show_queue(edges);
     free_matrix(m,4);
 }
 
@@ -171,6 +172,7 @@ void test3(){
 
     queue edges;
     prim(m,7, &edges);
+    show_queue(edges);
     free_matrix(m,7);
 
 }
