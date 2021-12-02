@@ -32,6 +32,11 @@ the edges of the tree in the ’edges’ queue */
             }
         }
         //hay que meter la T del conjunto
+        a.x = closest[k];
+        a.y = k;
+        a.weight = *m[closest[k] , k];
+        enqueue(a, edges);
+
         minDistance[k] = -1;
         for(j=1; j < nodes; j++)
         {
@@ -44,6 +49,7 @@ the edges of the tree in the ’edges’ queue */
         i++;
     }
     // return T
+    show_queue(*edges);   // <-   <-   <-   <-
     free(closest);
     free(minDistance);
 }
@@ -93,6 +99,22 @@ void init_seed() {
     srand(time(NULL));
 }
 
-    int main() {
+void test1(){
+    matrix m = create_matrix(5);
+    m[0][0] = 0, m[0][1] = 1, m[0][2] = 8, m[0][3] = 4, m[0][4] = 7;
+    m[1][0] = 1, m[1][1] = 0, m[1][2] = 2, m[1][3] = 6, m[1][4] = 5;
+    m[2][0] = 8, m[2][1] = 2, m[2][2] = 0, m[2][3] = 9, m[2][4] = 5;
+    m[3][0] = 4, m[3][1] = 6, m[3][2] = 9, m[3][3] = 0, m[3][4] = 3;
+    m[4][0] = 7, m[4][1] = 5, m[4][2] = 5, m[4][3] = 3, m[4][4] = 0;
+
+    queue edges;
+    prim(m,5, &edges);
+    free_matrix(m,5);
+}
+
+int main() {
+    test1();
+
+
     return 0;
 }

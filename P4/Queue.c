@@ -48,5 +48,14 @@ element_type Dequeue(queue *Q) {
 }
 
 void show_queue(queue Q){
-    //hay que hacerla
+    int i, weight = 0;
+
+    printf("Edges: ");
+    for(i=0; i<Q.size - 1  ;i++){
+        printf("(%d,%d), ", Q.vector[i].x, Q.vector[i].y);
+        weight += Q.vector[i].weight;
+    }
+    printf("(%d,%d)\n", Q.vector[i].x, Q.vector[i].y);
+    weight += Q.vector[i].weight;
+    printf("Weight: %d\n", weight);
 }

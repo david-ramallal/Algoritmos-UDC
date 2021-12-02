@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/Queue.h
+
+/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/main.c
+stdio.h
+-
+stdbool.h
+-
+sys/time.h
+-
+time.h
+-
+stdlib.h
+-
+math.h
+-
+Queue.h
+/cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/Queue.h
+
