@@ -31,15 +31,15 @@ the edges of the tree in the ’edges’ queue */
         }
         a.x = closest[k];
         a.y = k;
-        a.weight = *m[closest[k] , k];
+        a.weight = m[closest[k]][k];
         enqueue(a, edges);
 
         minDistance[k] = -1;
         for(j=1; j < nodes; j++)
         {
-            if(*m[j,k] < minDistance[j])
+            if(m[j][k] < minDistance[j])
             {
-                minDistance[j] = *m[j,k];
+                minDistance[j] = m[j][k];
                 closest[j] = k;
             }
         }
