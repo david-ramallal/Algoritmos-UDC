@@ -13,9 +13,9 @@ stdio.h
 -
 sys/time.h
 -
-time.h
--
 stdlib.h
+-
+math.h
 -
 Queue.h
 /cygdrive/c/Users/David/CLionProjects/Algoritmos-UDC/P4/Queue.h

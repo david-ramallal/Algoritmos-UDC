@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <sys/time.h>
-#include <time.h>
 #include <stdlib.h>
+#include <math.h>
 #include "Queue.h"
 
 void prim(matrix m, int nodes, queue *edges) {
@@ -45,7 +45,7 @@ the edges of the tree in the ’edges’ queue */
         }
         i++;
     }
-    show_queue(*edges);
+    //show_queue(*edges);
     free(closest);
     free(minDistance);
 }
@@ -90,11 +90,6 @@ double microseconds() {
     return (t.tv_usec + t.tv_sec * 1000000.0);
 }
 
-void init_seed() {
-    /* set the seed of a new sequence of pseudo-random integers */
-    srand(time(NULL));
-}
-
 void printMatrix(matrix m, int n){
     int i, j;
     for (i=0; i<n; i++){
@@ -102,6 +97,35 @@ void printMatrix(matrix m, int n){
             printf("%3d", m[i][j]);
         printf("\n");
     }
+}
+
+double exeFunction (int n){
+    double t, ta, tb, t1, t2;
+    matrix m = create_matrix(n);
+    queue edges;
+    int i;
+    init_matrix(m,n);
+    ta = microseconds();
+    prim(m,n,&edges);
+    tb = microseconds();
+    t = tb - ta;
+    if (t < 500) {
+        ta = microseconds();
+        for (i = 0; i < 1000; i++){
+            init_matrix(m,n);
+            prim(m,n,&edges);
+        }
+        tb = microseconds();
+        t1 = tb - ta;
+        ta = microseconds();
+        for (i = 0; i < 1000; i++){
+            init_matrix(m,n);
+        }
+        tb = microseconds();
+        t2 = tb - ta;
+        t = (t1 - t2) / 1000;
+    }
+    return t;
 }
 
 void test1(){
@@ -151,10 +175,38 @@ void test3(){
 
 }
 
+void printFunction(double function())
+{
+    int i;
+    printf("%4sn%14st(n)%12st(n)/n^1.8%12st(n)/n^2%14st(n)/n^2.2%s\n"
+            ,"","","","","","");
+    for(i = 25; i <= 1600; i = i*2){
+        if(function(i) < 500){
+            printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f%3s(*)\n"
+                    , i,"",function(i),"",
+                   function(i)/(pow(i,1.8)),"",
+                   function(i)/(pow(i,2)),"",
+                   function(i)/(pow(i,2.2)),"");
+        } else {
+            printf("%5d%7s%11.3f%12s%.8f%10s%.8f%14s%.8f\n"
+                    , i,"",function(i),"",
+                   function(i)/(pow(i,1.8)),"",
+                   function(i)/(pow(i,2)),"",
+                   function(i)/(pow(i,2.2)));
+        }
+    }
+}
+
 int main() {
     test1();
     test2();
     test3();
 
+    printf("\nPrim's Algorithm with random adjacency matrix:\n");
+    printFunction(exeFunction);
+
+    printf("\n(*) means that measurement corresponds to "
+           "an average time over K(1000 in this case) "
+           "executions of the algorithm\n");
     return 0;
 }
