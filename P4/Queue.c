@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include "Queue.h"
 
-void CreateQueue(queue *Q) {
+void create_queue(queue *Q) {
     Q->size = 0;
     Q->front_index = 0;
     Q->rear_index = -1;
 }
 
-int EmptyQueue (queue Q) {
+int empty_queue(queue Q) {
     return (Q.size == 0);
 }
 
@@ -17,7 +17,7 @@ void Increment(int *x) { /* private */
     *x = 0;
 }
 
-void Enqueue (element_type x, queue *Q) {
+void enqueue(element_type x, queue *Q) {
     if (Q->size == MAX_SIZE) {
         printf("error: Full Queue: %d\n", Q->size) ;
         exit( EXIT_FAILURE);
@@ -27,17 +27,17 @@ void Enqueue (element_type x, queue *Q) {
     Q->vector[Q->rear_index] = x;
 }
 
-element_type Front(queue Q) {
-    if (EmptyQueue(Q)) {
+element_type front(queue Q) {
+    if (empty_queue(Q)) {
         printf("error: Empty Queue\n");
         exit(EXIT_FAILURE);
     }
     return(Q.vector[Q.front_index]);
 }
 
-element_type Dequeue(queue *Q) {
+element_type dequeue(queue *Q) {
     element_type x;
-    if(EmptyQueue (*Q)) {
+    if(empty_queue(*Q)) {
         printf("error: EmptyQueue\n");
         exit(EXIT_FAILURE);
     }
