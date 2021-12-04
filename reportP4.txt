@@ -1,0 +1,68 @@
+Algorithms - Practical 4
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Authors:
+
+David García Ramallal (david.ramallal@udc.es)
+Alfredo Javier Freire Bouzas (javier.freire.bouzas@udc.es)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Introduction:
+
+In this practical, we are working with Prim's Algorithm.
+Its goal is obtaining the minimum spanning tree from an Adjancency Matrix that represents
+an specific graph.
+In the process of making the algorithm we use an a array-based circular implementation of a queue,
+as seen in the theory classes.
+To check that the algorithm works correctly, we created three tests where we introduced the data
+of the graphs proposed in figures 2, 3 and 4 of the PDF.
+For the calculations of the computational complexity and the times of the execution we check the
+alghoritm with randomly generated complete undirected graphs.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Information of the machine where the program was compiled and executed:
+
+Computer	: Acer Nitro AN515-55 V2.06
+Model name	: Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+Kernel		: Linux 5.11.0-34-generic
+Operating Sys	: Ubuntu 20.04.3 LTS
+VGA compatible controller: Intel Corporation UHD Graphics (rev 05)
+VGA compatible controller: NVIDIA Corporation Device 1f99 (rev a1)
+MemTotal	: 16220036 kB
+SwapTotal	: 2097148 kB
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Time unit: microseconds
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Prim's Algorithm with random adjacency matrix:
+    n              t(n)            t(n)/n^1.8            t(n)/n^2              t(n)/n^2.2
+   25             6.124            0.01909441          0.00992320              0.00548839   (*)
+   50            21.025            0.01815943          0.00864240              0.00360942   (*)
+  100            69.257            0.01743174          0.00688350              0.00264869   (*)
+  200           251.168            0.01704240          0.00594002              0.00207106   (*)
+  400           953.000            0.02048747          0.00603125              0.00194414
+  800          4392.000            0.03262387          0.00719844              0.00212297
+ 1600         30829.000            0.04495768          0.01054453              0.00224294
+
+(*) means that measurement corresponds to an average time over K(1000 in this case) executions of the algorithm
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Bounds and constants information
+
+	t(n)/n^1.8 is an understimated bound, which tends to infinity.
+	t(n)/n^2 is a tight bound, with constant values:
+		constant = 0.00788048
+	t(n)/n^2.2 is an overstimated bound, which tends to zero.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Conclusion: 
+
+As a conclusion, we would say that this implementation of Prim's Algorithm is quite slower than
+any of the other alghoritms that we have seen in the three previous practicals of this subject.
+Because of that, we decided to reduced the size of the inputs in the random cases by 20
+with respect of the other assignments.
+After studying the complexity, we can say that the one that best suits with this specific algorithm
+is n^2. However, as we can see in the data table, output values are not as "perfect" as in other
+practicals. Every bound tends to what it should tend but in their path they suffer a bit dicrease with
+the intermediate input values.
