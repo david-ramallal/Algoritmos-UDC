@@ -7,4 +7,4 @@
 
 **P3** - *Insertion sort and Quicksort* - 8 (Faltó explicación del umbral en el informe) <br />
 
-**P4** - *Prim’s Algorithm* - /// <br />
+**P4** - *Prim’s Algorithm* - 9,5 <br />
